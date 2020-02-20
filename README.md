@@ -16,21 +16,21 @@ fdisk -l
 
 UEFI/GPT layout
 
-Mount point on the installed system |	Partition |	Partition type GUID  | Partition attributes | Suggested size 
+| Mount point on the installed system |	Partition |	Partition type GUID  | Partition attributes | Suggested size |
 |---|:---:|:---:|:---:|:---:|:----:|---|
-/boot or /efi |	/dev/sda1 |	C12A7328-F81F-11D2-BA4B-00A0C93EC93B: EFI system partition  | | 260 MiB 
-/             | /dev/sda2 | 4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709: Linux x86-64 root (/) | | 23–32 GiB 
-[SWAP]        |	/dev/sda3 |	0657FD6D-A4AB-43C4-84E5-0933C84B4F4F: Linux swap 		    | | More than 512 MiB 
-/home         | /dev/sda4 |	933AC7E1-2EB4-4F13-B844-0E14E2AEF915: Linux /home 		    | | Remainder of the device 
+| /boot or /efi |	/dev/sda1 |	C12A7328-F81F-11D2-BA4B-00A0C93EC93B: EFI system partition  | | 260 MiB                   |
+| /             | /dev/sda2 | 4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709: Linux x86-64 root (/)   | | 23–32 GiB                 | 
+| [SWAP]        |	/dev/sda3 |	0657FD6D-A4AB-43C4-84E5-0933C84B4F4F: Linux swap 		    | | More than 512 MiB         |
+| /home         | /dev/sda4 |	933AC7E1-2EB4-4F13-B844-0E14E2AEF915: Linux /home 		    | | Remainder of the device   | 
 
 
 BIOS/GPT example layout
-Mount point on the installed system |	Partition |	Partition type GUID  | Partition attributes | Suggested size 
+| Mount point on the installed system |	Partition |	Partition type GUID  | Partition attributes | Suggested size |
 | --- |:---:|:---:|:---:|:---:|:---:|---|
-None   | /dev/sda1  | 21686148-6449-6E6F-744E-656564454649: BIOS boot partition1  	|                         |1 MiB 
-/ 	   | /dev/sda2  | 4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709: Linux x86-64 root (/)   | 2: Legacy BIOS bootable |	23–32 GiB 
-[SWAP] | /dev/sda3 	| 0657FD6D-A4AB-43C4-84E5-0933C84B4F4F: Linux swap 		        |                         |More than  512 MiB 
-/home  | /dev/sda4 	| 933AC7E1-2EB4-4F13-B844-0E14E2AEF915: Linux /home 	        |                         |Remainder of the device 
+| None   | /dev/sda1  | 21686148-6449-6E6F-744E-656564454649: BIOS boot partition1  	|                         |1 MiB                   |
+| / 	 | /dev/sda2  | 4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709: Linux x86-64 root (/)     | 2: Legacy BIOS bootable |	23–32 GiB              |
+| [SWAP] | /dev/sda3  | 0657FD6D-A4AB-43C4-84E5-0933C84B4F4F: Linux swap 		        |                         |More than  512 MiB      | 
+| /home  | /dev/sda4  | 933AC7E1-2EB4-4F13-B844-0E14E2AEF915: Linux /home 	            |                         |Remainder of the device | 
 
 
 ``` bash
