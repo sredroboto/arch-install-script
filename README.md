@@ -1,10 +1,7 @@
-# sred-box install
+# sred-box install (EM DESENVOLVIMENTO)
 ## Texto Guia de como fazer toda a minha instalação do Arch Linux.
 Caso não queira seguir o guia manualmente tem o script bash que já faz tudo automatizado.
 (O objetivo desse texto é ter em um só lugar tudo o que eu faço manualmente para ter o meu Setup Up and Running e me dar um norte de como vou fazer o meu script Bash.)
-
-(EM DESENVOVIMENTO)
-
 
 ``` bash
 loadkeys br-abnt2
@@ -184,19 +181,66 @@ AINDA VOU ESCREVER
 ## Instalação
 
 ```bash
-pacstrap /mnt base base-devel vim linux-hardened grub **efibootmgr**
+# pacstrap /mnt base base-devel vim linux-hardened grub **efibootmgr**
 
-genfstab -U /mnt >> /mnt/etc/fstab
+# genfstab -U /mnt >> /mnt/etc/fstab
 ```
 
 ### chroot
 
 ```bash
-arch-chroot /mnt
-pacman -Syu
-pacman -S apparmor
+# arch-chroot /mnt
+# pacman -Syu
+# pacman -S apparmor
 ```
 
+Fuso Horario
+``` bash
+
+# ln -sf /usr/share/zoneinfo/America/Fortaleza /etc/localtime
+# hwclock --systohc
+
+```
+
+
+Localization
+Uncomment en_US.UTF-8 pt_BR.UTF-8 and other needed locales in /etc/locale.gen, and generate them with:
+
+```bash
+# locale-gen
+```
+Create the locale.conf(5) file, and set the LANG variable accordingly:
+```bash
+#/etc/locale.conf
+
+LANG=en_US.UTF-8
+```
+
+If you set the keyboard layout, make the changes persistent in vconsole.conf(5): 
+
+```bash
+#/etc/vconsole.conf
+
+KEYMAP=de-latin1
+```
+
+Network configuration
+Create the hostname file: 
+```bash
+#/etc/hostname
+
+myhostname (nome que você queira para a maquina)
+
+```
+Add matching entries to hosts(5): 
+
+```
+#/etc/hosts
+
+127.0.0.1	localhost
+::1		    localhost
+127.0.1.1	myhostname.localdomain	myhostname
+```
 
 ### Preparing the boot partition
 ```bash
@@ -240,6 +284,12 @@ systemctl enable auditd
 
 #Caso UEFI
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --recheck
+
+#Caso BIOS
+grub-install --target=i386-pc /dev/sdX --recheck
+
+
+#Então
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
@@ -248,17 +298,46 @@ Depois disso tudo de ```exit``` umount todos os discos e reinicie, se inciar o G
 E ao inciar de o comando ```sudo apparmor_status``` caso mostre 44 profiles deu tudo certo.
 
 ## Firejail
+Instale o git e de clone nesse repositorio
+https://github.com/netblue30/firejail
+depois entre dentro da pasta e execute
+
+```bash
+./configure --prefix=/usr --enable-apparmor
+ 
+make
+
+sudo make install-strip
+```
+To enable its AppArmor profile, execute :
+```sudo aa-enforce firejail-default``` If apparmor throws error about duplicate lines in a specific directory, simply go to that directory and comment the duplicate lines.
+
+For some reason it throws an error about some "/ or variable", but when you restart and run sudo apparmor_status it should show firejail-default in the profiles.
+
+# X Window System
+
+```bash
+sudo pacman -S xorg
+```
 
 
-## TODO
-### O QUE AINDA FALTA ADICIONAR/FAZER
-* Instalação e configuração do Firejail.
+## O QUE AINDA FALTA ADICIONAR/FAZER
 * Instalação do Xorg e modulos da placa de vídeo.
-* Instalação do ALSA e PULSEAUDIO para pode ter no sistema.
-* Instalação da WM, e dotfiles
+* Adicionar os usuários necessarios e o tipo de root.
+* Organizar a mirrorlist de acordo com a velocidade e tipo.
+* xdg-user-dirs-update
+* Olhar o [Category:Laptops](https://wiki.archlinux.org/index.php/Category:Laptops) para instalar o que é necessario para o notebook
+* Instalar Codecs 
+* Sistemas de arquivos
+* Setting up a firewall
+* Instalação de Fontes necessárias
+* Temas gtk,qt.
+* Gerenciamento de sessão.
+* Instalação do ALSA e PULSEAUDIO para pode ter audio no sistema.
+* Instalação da WM (dwm) execução(dmenu), terminal(st) e dotfiles.
+* Listas de aplicativos necessários para o meu workflow.
 * Instalação dos apps necessários ao meu dia a dia.
 * O que é necessário ao pacman.conf
-* 
 
 Fontes:
 
@@ -266,3 +345,4 @@ https://wiki.archlinux.org/index.php/Installation_guide
 https://wiki.archlinux.org/index.php/General_recommendations
 https://www.reddit.com/r/linux/comments/9galhz/creating_a_hardened_arch_linux_installation_with/
 https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS
+https://wiki.archlinux.org/index.php/GRUB
