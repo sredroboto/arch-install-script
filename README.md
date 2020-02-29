@@ -320,6 +320,7 @@ For some reason it throws an error about some "/ or variable", but when you rest
 sudo pacman -S xorg
 ```
 
+# Modulos da Placa de vídeo
 
 ## O QUE AINDA FALTA ADICIONAR/FAZER
 * Instalação do Xorg e modulos da placa de vídeo.
@@ -342,7 +343,11 @@ sudo pacman -S xorg
 Fontes:
 
 https://wiki.archlinux.org/index.php/Installation_guide
+
 https://wiki.archlinux.org/index.php/General_recommendations
+
 https://www.reddit.com/r/linux/comments/9galhz/creating_a_hardened_arch_linux_installation_with/
+
 https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS
+
 https://wiki.archlinux.org/index.php/GRUB
