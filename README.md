@@ -385,6 +385,21 @@ Depois reconfigure o grub.
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
+## Intalação de audio
+
+```bash
+sudo pacman -S alsa-utils pulseaudio-alsa pulseaudio-bluetooth
+```
+
+## Instalação de bluethooth
+
+```bash
+sudo pacman -S bluez bluez-utils
+# Ativa serviço
+sudo systemctl enable bluetooth.service
+sudo systemctl start bluetooth.service
+```
+
 ## O QUE AINDA FALTA ADICIONAR/FAZER
 
 - Adicionar os usuários necessarios e o tipo de root (Script ou deixar o proprio usuário fazer?).
