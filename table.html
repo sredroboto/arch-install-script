@@ -1,0 +1,132 @@
+<table>
+  <tbody>
+    <tr>
+      <th>Mount point on the installed system</th>
+      <th>Partition</th>
+      <th>
+        <a
+          href="https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs"
+          class="extiw"
+          title="wikipedia:GUID Partition Table"
+          >Partition type GUID</a
+        >
+      </th>
+      <th>
+        <a
+          href="https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_entries_.28LBA_2.E2.80.9333.29"
+          class="extiw"
+          title="wikipedia:GUID Partition Table"
+          >Partition attributes</a
+        >
+      </th>
+      <th>Suggested size</th>
+    </tr>
+    <tr>
+      <td><code>/boot</code> or <code>/efi</code></td>
+      <td><code>/dev/sda1</code></td>
+      <td>
+        <code>C12A7328-F81F-11D2-BA4B-00A0C93EC93B</code>:
+        <a href="/index.php/EFI_system_partition" title="EFI system partition"
+          >EFI system partition</a
+        >
+      </td>
+      <td></td>
+      <td>260 MiB</td>
+    </tr>
+    <tr>
+      <td><code>/</code></td>
+      <td><code>/dev/sda2</code></td>
+      <td>
+        <code>4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709</code>: Linux x86-64 root (/)
+      </td>
+      <td></td>
+      <td>23–32 GiB</td>
+    </tr>
+    <tr>
+      <td><code>[SWAP]</code></td>
+      <td><code>/dev/sda3</code></td>
+      <td>
+        <code>0657FD6D-A4AB-43C4-84E5-0933C84B4F4F</code>: Linux
+        <a href="/index.php/Swap" title="Swap">swap</a>
+      </td>
+      <td></td>
+      <td>More than 512 MiB</td>
+    </tr>
+    <tr>
+      <td><code>/home</code></td>
+      <td><code>/dev/sda4</code></td>
+      <td><code>933AC7E1-2EB4-4F13-B844-0E14E2AEF915</code>: Linux /home</td>
+      <td></td>
+      <td>Remainder of the device</td>
+    </tr>
+  </tbody>
+</table>
+
+### BIOS/GPT example layout
+
+<table>
+  <tbody>
+    <tr>
+      <th>Mount point on the installed system</th>
+      <th>Partition</th>
+      <th>
+        <a
+          href="https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs"
+          class="extiw"
+          title="wikipedia:GUID Partition Table"
+          >Partition type GUID</a
+        >
+      </th>
+      <th>
+        <a
+          href="https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_entries_.28LBA_2.E2.80.9333.29"
+          class="extiw"
+          title="wikipedia:GUID Partition Table"
+          >Partition attributes</a
+        >
+      </th>
+      <th>Suggested size</th>
+    </tr>
+    <tr>
+      <td>None</td>
+      <td><code>/dev/sda1</code></td>
+      <td>
+        <code>21686148-6449-6E6F-744E-656564454649</code>:
+        <a
+          href="/index.php/BIOS_boot_partition"
+          class="mw-redirect"
+          title="BIOS boot partition"
+          >BIOS boot partition</a
+        ><sup>1</sup>
+      </td>
+      <td></td>
+      <td>1 MiB</td>
+    </tr>
+    <tr>
+      <td><code>/</code></td>
+      <td><code>/dev/sda2</code></td>
+      <td>
+        <code>4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709</code>: Linux x86-64 root (/)
+      </td>
+      <td><code>2</code>: Legacy BIOS bootable</td>
+      <td>23–32 GiB</td>
+    </tr>
+    <tr>
+      <td><code>[SWAP]</code></td>
+      <td><code>/dev/sda3</code></td>
+      <td>
+        <code>0657FD6D-A4AB-43C4-84E5-0933C84B4F4F</code>: Linux
+        <a href="/index.php/Swap" title="Swap">swap</a>
+      </td>
+      <td></td>
+      <td>More than 512 MiB</td>
+    </tr>
+    <tr>
+      <td><code>/home</code></td>
+      <td><code>/dev/sda4</code></td>
+      <td><code>933AC7E1-2EB4-4F13-B844-0E14E2AEF915</code>: Linux /home</td>
+      <td></td>
+      <td>Remainder of the device</td>
+    </tr>
+  </tbody>
+</table>
