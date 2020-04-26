@@ -205,25 +205,25 @@ AINDA VOU ESCREVER
 ## Instalação
 
 ```bash
-# pacstrap /mnt base base-devel vim linux-hardened linux-firmware grub **efibootmgr**
+pacstrap /mnt base base-devel vim linux-hardened linux-firmware grub **efibootmgr** networkmanager
 
-# genfstab -U /mnt >> /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 ```
 
 ### chroot
 
 ```bash
-# arch-chroot /mnt
-# pacman -Syu
-# pacman -S apparmor
+arch-chroot /mnt
+pacman -Syu
+pacman -S apparmor
 ```
 
 ### Fuso Horario
 
 ```bash
 
-# ln -sf /usr/share/zoneinfo/America/Fortaleza /etc/localtime
-# hwclock --systohc
+ln -sf /usr/share/zoneinfo/America/Fortaleza /etc/localtime
+hwclock --systohc
 
 ```
 
@@ -232,7 +232,7 @@ AINDA VOU ESCREVER
 Uncomment en_US.UTF-8 pt_BR.UTF-8 and other needed locales in /etc/locale.gen, and generate them with:
 
 ```bash
-# locale-gen
+locale-gen
 ```
 
 Create the locale.conf(5) file, and set the LANG variable accordingly:
@@ -373,10 +373,18 @@ sudo pacman -S sddm sddm-kcm
 sudo systemctl enable sddm.service
 ```
 
-## Modulos da Placa de vídeo
+## Modulos da ucode
+
+### Intel
 
 ```bash
-sudo pacman -S amd-ucode intel-ucode
+sudo pacman -S intel-ucode
+```
+
+### AMD
+
+```bash
+sudo pacman -S amd-ucode
 ```
 
 Depois reconfigure o grub.
@@ -385,7 +393,242 @@ Depois reconfigure o grub.
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-## Intalação de audio
+
+## Modulos da Placa de Vídeo
+
+### Escolha um e instale
+
+<table class="wikitable" style="text-align: center;">
+  <tbody>
+    <tr>
+      <th>Brand</th>
+      <th>Type</th>
+      <th>Driver</th>
+      <th>OpenGL</th>
+      <th>
+        OpenGL (<a
+          href="/index.php/Multilib"
+          class="mw-redirect"
+          title="Multilib"
+          >multilib</a
+        >)
+      </th>
+      <th>Documentation</th>
+    </tr>
+    <tr>
+      <th rowspan="2">AMD / ATI</th>
+      <td rowspan="2">Open source</td>
+      <td>
+        <span class="plainlinks archwiki-template-pkg"
+          ><a
+            rel="nofollow"
+            class="external text"
+            href="https://www.archlinux.org/packages/?name=xf86-video-amdgpu"
+            >xf86-video-amdgpu</a
+          ></span
+        >
+      </td>
+      <td rowspan="2">
+        <span class="plainlinks archwiki-template-pkg"
+          ><a
+            rel="nofollow"
+            class="external text"
+            href="https://www.archlinux.org/packages/?name=mesa"
+            >mesa</a
+          ></span
+        >
+      </td>
+      <td rowspan="2">
+        <span class="plainlinks archwiki-template-pkg"
+          ><a
+            rel="nofollow"
+            class="external text"
+            href="https://www.archlinux.org/packages/?name=lib32-mesa"
+            >lib32-mesa</a
+          ></span
+        >
+      </td>
+      <td><a href="/index.php/AMDGPU" title="AMDGPU">AMDGPU</a></td>
+    </tr>
+    <tr>
+      <td>
+        <span class="plainlinks archwiki-template-pkg"
+          ><a
+            rel="nofollow"
+            class="external text"
+            href="https://www.archlinux.org/packages/?name=xf86-video-ati"
+            >xf86-video-ati</a
+          ></span
+        >
+      </td>
+      <td><a href="/index.php/ATI" title="ATI">ATI</a></td>
+    </tr>
+    <tr>
+      <th>Intel</th>
+      <td>Open source</td>
+      <td>
+        <span class="plainlinks archwiki-template-pkg"
+          ><a
+            rel="nofollow"
+            class="external text"
+            href="https://www.archlinux.org/packages/?name=xf86-video-intel"
+            >xf86-video-intel</a
+          ></span
+        >
+      </td>
+      <td>
+        <span class="plainlinks archwiki-template-pkg"
+          ><a
+            rel="nofollow"
+            class="external text"
+            href="https://www.archlinux.org/packages/?name=mesa"
+            >mesa</a
+          ></span
+        >
+      </td>
+      <td>
+        <span class="plainlinks archwiki-template-pkg"
+          ><a
+            rel="nofollow"
+            class="external text"
+            href="https://www.archlinux.org/packages/?name=lib32-mesa"
+            >lib32-mesa</a
+          ></span
+        >
+      </td>
+      <td>
+        <a href="/index.php/Intel_graphics" title="Intel graphics"
+          >Intel graphics</a
+        >
+      </td>
+    </tr>
+    <tr>
+      <th rowspan="3">NVIDIA</th>
+      <td>Open source</td>
+      <td>
+        <span class="plainlinks archwiki-template-pkg"
+          ><a
+            rel="nofollow"
+            class="external text"
+            href="https://www.archlinux.org/packages/?name=xf86-video-nouveau"
+            >xf86-video-nouveau</a
+          ></span
+        >
+      </td>
+      <td>
+        <span class="plainlinks archwiki-template-pkg"
+          ><a
+            rel="nofollow"
+            class="external text"
+            href="https://www.archlinux.org/packages/?name=mesa"
+            >mesa</a
+          ></span
+        >
+      </td>
+      <td>
+        <span class="plainlinks archwiki-template-pkg"
+          ><a
+            rel="nofollow"
+            class="external text"
+            href="https://www.archlinux.org/packages/?name=lib32-mesa"
+            >lib32-mesa</a
+          ></span
+        >
+      </td>
+      <td><a href="/index.php/Nouveau" title="Nouveau">Nouveau</a></td>
+    </tr>
+    <tr>
+      <td rowspan="2">Proprietary</td>
+      <td>
+        <span class="plainlinks archwiki-template-pkg"
+          ><a
+            rel="nofollow"
+            class="external text"
+            href="https://www.archlinux.org/packages/?name=nvidia"
+            >nvidia</a
+          ></span
+        >
+      </td>
+      <td>
+        <span class="plainlinks archwiki-template-pkg"
+          ><a
+            rel="nofollow"
+            class="external text"
+            href="https://www.archlinux.org/packages/?name=nvidia-utils"
+            >nvidia-utils</a
+          ></span
+        >
+      </td>
+      <td>
+        <span class="plainlinks archwiki-template-pkg"
+          ><a
+            rel="nofollow"
+            class="external text"
+            href="https://www.archlinux.org/packages/?name=lib32-nvidia-utils"
+            >lib32-nvidia-utils</a
+          ></span
+        >
+      </td>
+      <td rowspan="2"><a href="/index.php/NVIDIA" title="NVIDIA">NVIDIA</a></td>
+    </tr>
+    <tr>
+      <td>
+        <span class="plainlinks archwiki-template-pkg"
+          ><a
+            rel="nofollow"
+            class="external text"
+            href="https://aur.archlinux.org/packages/nvidia-390xx/"
+            >nvidia-390xx</a
+          ></span
+        ><sup><small>AUR</small></sup>
+      </td>
+      <td>
+        <span class="plainlinks archwiki-template-pkg"
+          ><a
+            rel="nofollow"
+            class="external text"
+            href="https://aur.archlinux.org/packages/nvidia-390xx-utils/"
+            >nvidia-390xx-utils</a
+          ></span
+        ><sup><small>AUR</small></sup>
+      </td>
+      <td>
+        <span class="plainlinks archwiki-template-pkg"
+          ><a
+            rel="nofollow"
+            class="external text"
+            href="https://aur.archlinux.org/packages/lib32-nvidia-390xx-utils/"
+            >lib32-nvidia-390xx-utils</a
+          ></span
+        ><sup><small>AUR</small></sup>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### MESA
+
+```bash
+sudo pacman -S mesa lib32-mesa
+```
+
+### Extra ATI
+
+```bash
+sudo pacman -S xf86-video-ati mesa-vdpau lib32-mesa-vdpau
+```
+
+### Extra Intel
+
+```bash
+sudo pacman -S vulkan-intel
+```
+
+### Nvidia
+
+[Leia a wiki(complicado demais)](https://wiki.archlinux.org/index.php/NVIDIA)
+
+## Instalação de audio
 
 ```bash
 sudo pacman -S alsa-utils pulseaudio-alsa pulseaudio-bluetooth
@@ -395,9 +638,180 @@ sudo pacman -S alsa-utils pulseaudio-alsa pulseaudio-bluetooth
 
 ```bash
 sudo pacman -S bluez bluez-utils
-# Ativa serviço
+# Ativar serviço
 sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
+```
+
+## Mirrorlist por velocidade
+
+### Faça um backup
+
+```bash
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+```
+
+### Instale
+
+```bash
+sudo pacman -S reflector
+```
+
+### Execute
+
+```bash
+ reflector --latest 200 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+
+```
+
+## JAVA
+
+```bash
+sudo pacman -S jre-openjdk-headless jre-openjdk jdk-openjdk openjdk-doc openjdk-src jre11-openjdk-headless jre11-openjdk jdk11-openjdk openjdk11-doc openjdk11-src
+```
+
+## Packages sortidos
+
+### Web browsers
+
+```bash
+sudo pacman -S lynx firefox
+```
+
+### File Sharing
+
+```bash
+sudo pacman -S youtube-dl
+```
+
+### Torrent
+
+```bash
+sudo pacman -S qbittorrent
+```
+
+### Email Client
+
+```bash
+sudo pacman -S thunderbird
+```
+
+### IRC Client
+
+```bash
+sudo pacman -S hexchat
+```
+
+### file explorer
+
+```bash
+sudo pacman -S ranger
+```
+
+### Video Player
+
+```bash
+sudo pacman -S vlc mpv
+```
+
+### Image Viwer
+
+```bash
+sudo pacman -S feh
+```
+
+### Raster graphics editors
+
+```bash
+sudo pacman -S gimp krita
+```
+
+### Vector graphics editors
+
+```bash
+sudo pacman -S inkscape
+```
+
+### 3D computer graphics
+
+```bash
+sudo pacman -S blender
+```
+
+### Audio players
+
+```bash
+sudo pacman -S cmus rhythmbox
+```
+
+### Audio editors
+
+```bash
+sudo pacman -S audacity
+```
+
+### Digital audio workstations
+
+```bash
+sudo pacman -S lmms
+```
+
+### Audio synthesis environments
+
+```bash
+sudo pacman -S supercollider csound
+```
+
+### Sound generators
+
+```bash
+sudo pacman -S hydrogen
+```
+
+### Video editors
+
+```bash
+sudo pacman -S  kdenlive
+```
+
+### Subtitle editors
+
+Ainda em busca
+
+### Screencast
+
+```bash
+sudo pacman -S obs-studio
+```
+
+### Disk usage display
+
+```bash
+sudo pacman -S ncdu
+```
+
+### Task managers
+
+```bash
+sudo pacman -S htop
+```
+
+### Code Editor
+
+```bash
+sudo pacman -S code
+```
+
+### Office
+
+```bash
+sudo pacman -S libreoffice-still-pt-br
+```
+
+### Latex - Text Converter - Markdown
+
+```bash
+sudo pacman -S texlive-most pandoc
 ```
 
 ## O QUE AINDA FALTA ADICIONAR/FAZER
@@ -405,16 +819,16 @@ sudo systemctl start bluetooth.service
 - Adicionar os usuários necessarios e o tipo de root (Script ou deixar o proprio usuário fazer?).
 - Organizar a mirrorlist de acordo com a velocidade e tipo. (Ver Arch Wiki sobre isso)
 - Olhar o [Category:Laptops](https://wiki.archlinux.org/index.php/Category:Laptops) para instalar o que é necessario para o notebook
-- Instalar Codecs
 - Sistemas de arquivos
 - Setting up a firewall
 - Instalação de Fontes necessárias
-- Gerenciamento de sessão.
-- Instalação do ALSA e PULSEAUDIO para pode ter audio no sistema.
-- Instalação da WM (dwm) execução(dmenu), terminal(st) e dotfiles.
 - Listas de aplicativos necessários para o meu workflow.
 - Instalação dos apps necessários ao meu dia a dia.
 - O que é necessário ao pacman.conf
+- Criar um script/service para roda o reflector.
+- Adicionar forma de editar o pacman.conf
+- Instalar o yay
+- Instalar pacotes do AUR
 
 ## Fontes
 
@@ -429,3 +843,11 @@ sudo systemctl start bluetooth.service
 [Arch Wiki: GRUB](https://wiki.archlinux.org/index.php/GRUB)
 
 [Arch Wiki: Microcode](https://wiki.archlinux.org/index.php/Microcode)
+
+[Arch Wiki: Reflector](https://wiki.archlinux.org/index.php/Reflector)
+
+[Arch Wiki: Intel Graphics](https://wiki.archlinux.org/index.php/Intel_graphics)
+
+[Arch Wiki: ATI](https://wiki.archlinux.org/index.php/ATI)
+
+[Arch Wiki: List_of_applications](https://wiki.archlinux.org/index.php/List_of_applications#Network_connection)
