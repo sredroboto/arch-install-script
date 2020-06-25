@@ -1,15 +1,25 @@
-# sred-box install (EM DESENVOLVIMENTO)
 
-## Texto Guia de como fazer toda a minha instalação do Arch Linux.
+# Texto Guia de como fazer toda a minha instalação de sistemas Arch Flavor.
 
-Caso não queira seguir o guia manualmente tem o script bash que já faz tudo automatizado.
-(O objetivo desse texto é ter em um só lugar tudo o que eu faço manualmente para ter o meu Setup Up and Running e me dar um norte de como vou fazer o meu script Bash.)
+O estilo de instação do Arch Linux é universal para vários distros que são baseados nele.
 
+Aqui estou fazendo o especifico para o Parabola, onde tem algumas partes espeficificas, mas a maior parte é o mesmo ao Arch Linux Vanilla.
+
+(O objetivo desse texto é ter em um só lugar tudo o que eu faço manualmente para ter o meu Setup Up and Running e me dar um norte)
+
+## Configuração do teclado br-abnt2.
 ```bash
 loadkeys br-abnt2
+
+```
+## Confirmar se o sistema está no modo EFI ou BIOS
+```bash
 ls /sys/firmware/efi/efivars
+```
+
+## Organizar o horario
+```bash
 timedatectl set-ntp true
-fdisk -l
 ```
 
 ## Conectar a internet Internet
@@ -21,9 +31,13 @@ A archiso já é configurada para automaticamente reconhecer o cabo e conectar a
 
 ### Wifi
 
-AINDA VOU ESCREVER
+No sistema Arch Linux Vanilla é só pegar configurar normalmente com o wpa_supplicant (AINDA VOU ESCREVER)
+
+No sistema Parabola só utilizar o wifi-menu, mas lembrar de configurar o driver nonfree (AINDA VOU ESCREVER)
 
 ## Partição do disco
+
+Escolher uma das tabelas de partição
 
 ### UEFI/GPT example layout
 
@@ -162,6 +176,9 @@ AINDA VOU ESCREVER
 
 ## LVM on LUKS
 
+Alem de escolher a tabela de partição fazer uma criptografia do sistema de arquivos que é 
+LMV dentro de uma partição LURKS.
+
 ```
 +-----------------------------------------------------------------------+ +----------------+
 | Logical volume 1      | Logical volume 2      | Logical volume 3      | | Boot partition |
@@ -176,12 +193,15 @@ AINDA VOU ESCREVER
 +-----------------------------------------------------------------------+ +----------------+
 ```
 
-### Preparing the disk
+## Preparando o Disco
 
+Criando a partição criptograda
 ```bash
 # cryptsetup luksFormat /dev/sda1
 # cryptsetup open /dev/sda1 cryptlvm
-
+```
+Criando as partições LVM
+```bash 
 # pvcreate /dev/mapper/cryptlvm
 
 # vgcreate MyVolGroup /dev/mapper/cryptlvm
@@ -189,11 +209,17 @@ AINDA VOU ESCREVER
 # lvcreate -L 8G MyVolGroup -n swap
 # lvcreate -L 32G MyVolGroup -n root
 # lvcreate -l 100%FREE MyVolGroup -n home
+```
 
+Formatando as partioções nos formatos corretos
+```bash
 # mkfs.ext4 /dev/MyVolGroup/root
 # mkfs.ext4 /dev/MyVolGroup/home
 # mkswap /dev/MyVolGroup/swap
+```
 
+Montagem das partições para a instalação
+```bash
 # mount /dev/MyVolGroup/root /mnt
 # mkdir /mnt/home
 # mount /dev/MyVolGroup/home /mnt/home
@@ -204,9 +230,12 @@ AINDA VOU ESCREVER
 
 ## Instalação
 
+Criação e instalação dos pacotes na RAIZ
 ```bash
 pacstrap /mnt base base-devel vim linux-hardened linux-firmware grub **efibootmgr** networkmanager
-
+```
+Salvando a tabela de partições no fstab
+```bash
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
 
@@ -218,7 +247,7 @@ pacman -Syu
 pacman -S apparmor
 ```
 
-### Fuso Horario
+### Fuso Horário
 
 ```bash
 
@@ -227,31 +256,32 @@ hwclock --systohc
 
 ```
 
-### Localization
+### Localização
 
-Uncomment en_US.UTF-8 pt_BR.UTF-8 and other needed locales in /etc/locale.gen, and generate them with:
+Descomente en_US.UTF-8 pt_BR.UTF-8 e outros locales necessarios en /etc/locale.gen para gerar os idiomas da interfaces
 
+Gerando locales
 ```bash
 locale-gen
 ```
 
-Create the locale.conf(5) file, and set the LANG variable accordingly:
 
+Crie o arquivo locale.conf e coloque o idioma que você queria o sistema.
 ```bash
 #/etc/locale.conf
 
-LANG=en_US.UTF-8
+LANG=pt_BR.UTF-8
 ```
 
-If you set the keyboard layout, make the changes persistent in vconsole.conf(5):
 
+A mesma coisa para o teclado como o a layout no arquivo vconsole.conf
 ```bash
 #/etc/vconsole.conf
 
-KEYMAP=de-latin1
+KEYMAP=br-abnt2
 ```
 
-### Network configuration
+### Cofiguração de Conexões
 
 Create the hostname file.
 
