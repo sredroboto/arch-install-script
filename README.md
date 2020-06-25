@@ -3,7 +3,7 @@
 
 O estilo de instação do Arch Linux é universal para vários distros que são baseados nele.
 
-Aqui estou fazendo o especifico para o Parabola, onde tem algumas partes espeficificas, mas a maior parte é o mesmo ao Arch Linux Vanilla.
+Aqui estou fazendo o especifico para o Parabola, onde tem algumas partes espeficificas, mas a maior parte é o mesmo para Arch Linux Vanilla.
 
 (O objetivo desse texto é ter em um só lugar tudo o que eu faço manualmente para ter o meu Setup Up and Running e me dar um norte)
 
